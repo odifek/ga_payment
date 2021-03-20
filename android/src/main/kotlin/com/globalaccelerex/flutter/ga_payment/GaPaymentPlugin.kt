@@ -37,6 +37,7 @@ class GaPaymentPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             pendingResult = finalResult
         } else {
             resultListener?.success(finalResult)
+            resultListener = null
         }
     }
 
@@ -80,7 +81,9 @@ class GaPaymentPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.error("Failure", "Activity not ready yet!", null)
             return
         }
-        resultListener = result
+        if (call.method != "checkPendingRequest") { // We don't want to keep a record of the result listener since we expect to deliver the result immediately
+            resultListener = result
+        }
         when (call.method) {
             "checkPendingRequest" -> {
                 if (pendingResult != null) {
