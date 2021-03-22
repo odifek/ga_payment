@@ -105,7 +105,7 @@ class GaPaymentPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     val amount = call.argument<Double>("amount")
                     val transType = call.argument<String>("transType")
                     val print = call.argument<Boolean>("print") ?: false
-                    val requestData = """{"transType": "$transType", "amount": $amount, "print": $print}"""
+                    val requestData = """{"transType": "$transType", "amount": "$amount", "print": "$print"}"""
                     val intent = Intent("com.globalaccelerex.transaction")
                             .putExtra("requestData", requestData)
                     try {
